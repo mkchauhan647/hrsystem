@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import api from '@/services/api';
 import validators from '@/utils/validators';
 import { dummyJobs } from '@/data/dummyJobs';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const CandidateForm = ({ params }) => {
     
@@ -16,6 +18,8 @@ const CandidateForm = ({ params }) => {
         education: '',
         experience: '',
         skills: '',
+        status: 'pending',
+        submit_date: new Date().toLocaleDateString(),
         resume: null,
         coverLetter: null,
         otherFiles: []
@@ -62,26 +66,34 @@ const CandidateForm = ({ params }) => {
         formData.otherFiles.forEach(file => {
             formDataToSend.append('otherFiles', file);
         });
+        formDataToSend.append('jobId', params.jobid);
+        formDataToSend.append('status', formData.status);
 
         // Submit data to backend
         try {
             const response = await api.addCandidate(formDataToSend);
-            console.log('Candidate submitted successfully!', response.data);
+            // console.log('Candidate submitted successfully!', response.data);
+            if (response.status === 200) {
+                toast.success('Applicatoin submitted successfully!');
+            }
+            // toast.success('Candidate submitted successfully!');
             // Optionally, reset form fields after successful submission
-            setFormData({
-                name: '',
-                email: '',
-                phone: '',
-                education: '',
-                experience: '',
-                skills: '',
-                resume: null,
-                coverLetter: null,
-                otherFiles: []
-            });
+            // setFormData({
+            //     name: '',
+            //     email: '',
+            //     phone: '',
+            //     education: '',
+            //     experience: '',
+            //     skills: '',
+            //     resume: null,
+            //     coverLetter: null,
+            //     otherFiles: []
+            // });
         } catch (error) {
-            console.error('Error submitting candidate:', error);
+            console.error('Error submitting candidate:', error.response.data);
             // Handle error state
+            
+            toast.error(`Error ! ${error.response.data.message}`);
         }
     };
 
@@ -98,6 +110,7 @@ const CandidateForm = ({ params }) => {
                                 <ul key={index} className=' list-disc list-inside p-4'>
                                     <li className="text-lg font-semibold">{job.title}</li>
                                     <li>{job.description}</li>
+                                    <li>{job.company}</li>
                                 </ul>
                             );
                         }
@@ -189,6 +202,7 @@ const CandidateForm = ({ params }) => {
                 {/* Submit Button */}
                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
             </form>
+            <ToastContainer />
         </div>
     );
 };

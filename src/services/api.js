@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000/api'; // Replace with your backend API URL
+const BASE_URL = 'http://localhost:3000/api'; // Replace with your backend API URL
 
 const api = axios.create({
     baseURL: BASE_URL,
@@ -13,11 +13,18 @@ const api = axios.create({
 });
 
 const getCandidates = () => {
-    return api.get('/candidates');
+    return api.get('/forms');
 };
 
+
 const addCandidate = (formData) => {
-    return api.post('/candidates', formData);
+    console.log('formData:', formData);
+    // return api.post('/forms', formData);
+    return api.post('/forms', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
 };
 
 // Add more API functions as needed
