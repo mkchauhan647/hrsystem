@@ -1,16 +1,25 @@
-// Initialize Firebase Admin SDK
-const { initializeApp, cert } = require("firebase-admin/app");
-import { App, getApps } from "firebase-admin/app";
-const serviceAccount = require("./hr-system-eb667-firebase-adminsdk-nb8oq-8e8c437db8.json");
+// initializeFirebase.ts
+import { initializeApp, cert, App, getApps } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 
-let app:App; 
+const serviceAccount = {
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+  privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n') ?? '',
+};
+
+let app: App;
 
 if (!getApps().length) {
   app = initializeApp({
     credential: cert(serviceAccount),
   });
 } else {
-    app = getApps()[0];
+  app = getApps()[0];
 }
 
-export { app };
+const firestore = getFirestore(app);
+const storage = getStorage(app);
+
+export { app, firestore, storage };
