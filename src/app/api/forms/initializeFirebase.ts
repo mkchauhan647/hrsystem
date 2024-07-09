@@ -19,7 +19,7 @@ if (!getApps().length) {
   app = getApps()[0];
 }
 
-const firestore = getFirestore(app);
-const storage = getStorage(app);
+// const firestore = getFirestore(app);
+// const storage = getStorage(app);
 
-export { app, firestore, storage };
+export { app};
