@@ -3,8 +3,12 @@
 import React, { useState } from 'react';
 import api from '@/services/api';
 import validators from '@/utils/validators';
+import { dummyJobs } from '@/data/dummyJobs';
 
-const CandidateForm = () => {
+const CandidateForm = ({ params }) => {
+    
+    console.log(params);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -82,8 +86,29 @@ const CandidateForm = () => {
     };
 
     return (
-        <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-md m-6">
-            <h2 className="text-lg font-semibold mb-4">Submit Candidate</h2>
+        <div className=" w-[60%] mx-auto p-6 bg-white shadow-md rounded-md m-6 w">
+
+
+            <div className='py-8'>
+                <p>You are Apply For this Job Application:</p>
+                {
+                    dummyJobs.map((job, index) => {
+                        if (job._id == params.jobid) {
+                            return (
+                                <ul key={index} className=' list-disc list-inside p-4'>
+                                    <li className="text-lg font-semibold">{job.title}</li>
+                                    <li>{job.description}</li>
+                                </ul>
+                            );
+                        }
+                    
+                    })
+                }
+            </div>
+
+
+
+            {/* <h2 className="text-lg font-semibold mb-4">App</h2> */}
             <form onSubmit={handleSubmit}>
                 {/* Personal Information */}
                 <div className="mb-4">

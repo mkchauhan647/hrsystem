@@ -1,13 +1,14 @@
+'use client'
 import { db, storage, auth } from './firebaseConfig'
 import { getDocs, collection, query, where, getDoc, doc, setDoc, updateDoc, deleteDoc,addDoc } from 'firebase/firestore'
-
-
+import { GoogleAuthProvider, signInWithPopup, } from 'firebase/auth';
+import React from 'react';
 // Insert Data to candidates collection in firestore
 
-export const insertCandidate = async (data) => {
+export const insertData = async (collectionname,data) => {
     try {
         // const docRef = await setDoc(doc(db, "candidates", data.id), data);
-        const docRef = await addDoc(collection(db, 'candidates'), data);
+        const docRef = await addDoc(collection(db, collectionname), data);
         console.log("Document written with ID: ", docRef.id);
         return docRef
     } catch (e) {
@@ -46,3 +47,25 @@ export const updateCandidate = async (id, data) => {
     const docRef = doc(db, "candidates", id);
     await updateDoc(docRef, data);
 }
+
+const signWithPop = async () => {
+    const provider = new GoogleAuthProvider();
+    const result = await signInWithPopup(auth, provider);
+    return result
+}
+
+
+// Create context for firebase
+
+export const FirebaseContext = React.createContext(null);
+
+// Create a provider for Firebase context
+
+export const FirebaseProvider = ({ children }) => {
+    return (
+        <FirebaseContext.Provider value={{auth,signWithPop }}>
+            {children}
+        </FirebaseContext.Provider>
+        )
+}
+
