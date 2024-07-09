@@ -13,7 +13,8 @@ let app: App;
 
 if (!getApps().length) {
   app = initializeApp({
-    credential: cert(serviceAccount),
+      credential: cert(serviceAccount),
+      storageBucket: `${process.env.FIREBASE_PROJECT_ID}.appspot.com`,
   });
 } else {
   app = getApps()[0];
