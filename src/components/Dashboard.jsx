@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 export default function Dashboard() {
     const [candidates, setCandidates] = useState([]);
     const [resumes, setResumes] = useState([]);
@@ -21,8 +22,9 @@ export default function Dashboard() {
 // Function to fetch candidates
   const fetchCandidates = async () => {
     try {
-      const response = await axios.get('/api/candidates');
-      setCandidates(response.data);
+    //   const response = await axios.get('/api/candidates');
+        //   setCandidates(response.data);
+        toast.success("This is dummy Candidates are Fetched successfully !")
     } catch (error) {
       console.error('Error fetching candidates:', error);
     }
@@ -45,7 +47,7 @@ export default function Dashboard() {
                                     </svg>
                                 </div>
                                 <div className="mx-5">
-                                    <h4 className="text-2xl font-semibold text-gray-700">0</h4>
+                                    <h4 className="text-2xl font-semibold text-gray-700">50</h4>
                                     <div className="text-gray-500">Total Candidates</div>
                                 </div>
                             </div>
@@ -59,20 +61,72 @@ export default function Dashboard() {
                                     </svg>
                                 </div>
                                 <div className="mx-5">
-                                    <h4 className="text-2xl font-semibold text-gray-700">0</h4>
+                                    <h4 className="text-2xl font-semibold text-gray-700">10</h4>
+                                    <div className="text-gray-500">Currently Interviewing</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-full px-6 mt-6 xl:w-1/2 xl:mt-0">
+                            <div className="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                                <div className="p-3 bg-blue-600 bg-opacity-75 rounded-full">
+                                    <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 20l-6-6m0 0l-6-6m6 6h12m0 0l-6-6m6 6L6 6m6 6L6 6"></path>
+                                    </svg>
+                                </div>
+                                <div className="mx-5">
+                                    <h4 className="text-2xl font-semibold text-gray-700">20</h4>
+                                    <div className="text-gray-500">Number of Hired Candidates</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-full px-6 mt-6 xl:w-1/2 xl:mt-0">
+                            <div className="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                                <div className="p-3 bg-blue-600 bg-opacity-75 rounded-full">
+                                    <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 20l-6-6m0 0l-6-6m6 6h12m0 0l-6-6m6 6L6 6m6 6L6 6"></path>
+                                    </svg>
+                                </div>
+                                <div className="mx-5">
+                                    <h4 className="text-2xl font-semibold text-gray-700">5</h4>
                                     <div className="text-gray-500">Parsed Resumes</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-full px-6 mt-6 xl:w-1/2 xl:mt-0">
+                            <div className="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                                <div className="p-3 bg-blue-600 bg-opacity-75 rounded-full">
+                                    <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 20l-6-6m0 0l-6-6m6 6h12m0 0l-6-6m6 6L6 6m6 6L6 6"></path>
+                                    </svg>
+                                </div>
+                                <div className="mx-5">
+                                    <h4 className="text-2xl font-semibold text-gray-700">10</h4>
+                                    <div className="text-gray-500">Number of Projects</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-full px-6 mt-6 xl:w-1/2 xl:mt-0">
+                            <div className="flex items-center px-5 py-6 bg-white rounded-md shadow-sm">
+                                <div className="p-3 bg-blue-600 bg-opacity-75 rounded-full">
+                                    <svg className="w-8 h-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 20l-6-6m0 0l-6-6m6 6h12m0 0l-6-6m6 6L6 6m6 6L6 6"></path>
+                                    </svg>
+                                </div>
+                                <div className="mx-5">
+                                    <h4 className="text-2xl font-semibold text-gray-700">35</h4>
+                                    <div className="text-gray-500">Number of Jobs Listed</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-8">
+                {/* <div className="mt-8">
                     <h4 className="text-gray-600">Resume Upload</h4>
                     <div className="mt-4">
                         <input type="file" onChange={(e) => parseResume(e.target.files[0])} />
                     </div>
-                </div>
+                </div> */}
 
                 <div className="mt-8">
                     <h4 className="text-gray-600">Candidates</h4>
@@ -91,6 +145,7 @@ export default function Dashboard() {
                 </div>
 
             </div>
+            <ToastContainer/>
         </main>
     )
 };
