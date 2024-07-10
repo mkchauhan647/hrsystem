@@ -1,15 +1,15 @@
 // CandidateForm.js
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import api from '@/services/api';
 import validators from '@/utils/validators';
 import { dummyJobs } from '@/data/dummyJobs';
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 const CandidateForm = ({ params }) => {
     
-    console.log(params);
+    console.log('pr',params);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -19,11 +19,36 @@ const CandidateForm = ({ params }) => {
         experience: '',
         skills: '',
         status: 'pending',
+        company:'',
         submit_date: new Date().toLocaleDateString(),
         resume: null,
         coverLetter: null,
         otherFiles: []
     });
+
+    const [jobDetail, setJobDetail] = useState({
+        jobDescription: '',
+        title: '',
+        companyName: '',
+        requirements: [],
+        
+    })
+
+    useEffect(() => {
+        async function getJobDetail() {
+            console.log('id', params.jobid);
+            try {
+                const response = await axios.get(`/api/jobs/${params.jobid}`);
+                const data = await response.data;
+                console.log('data',data);
+                setJobDetail(data);
+            } catch (error) {
+                console.log("something happened", error);
+            }
+        }
+        
+        getJobDetail();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -68,6 +93,7 @@ const CandidateForm = ({ params }) => {
         });
         formDataToSend.append('jobId', params.jobid);
         formDataToSend.append('status', formData.status);
+        formDataToSend.append('company', (dummyJobs.filter((job) => job._id == 1))[0].company);
 
         // Submit data to backend
         try {
@@ -101,22 +127,22 @@ const CandidateForm = ({ params }) => {
         <div className=" w-[60%] mx-auto p-6 bg-white shadow-md rounded-md m-6 w">
 
 
-            <div className='py-8'>
                 <p>You are Apply For this Job Application:</p>
+            <div className='flex flex-col gap-3 py-4 px-4'>
+                <p><span className='text-lg'>Title: </span> {jobDetail.title}</p>
+                <p> <span className='text-lg'>Company: </span> {jobDetail.companyName}</p>
+                <p><span className='text-lg'>Job Description: </span> {jobDetail.jobDescription}</p>
+                <p>Requirements: 
+                <ul className='list-disc list-inside'>
                 {
-                    dummyJobs.map((job, index) => {
-                        if (job._id == params.jobid) {
-                            return (
-                                <ul key={index} className=' list-disc list-inside p-4'>
-                                    <li className="text-lg font-semibold">{job.title}</li>
-                                    <li>{job.description}</li>
-                                    <li>{job.company}</li>
-                                </ul>
-                            );
-                        }
-                    
+                    jobDetail.requirements && jobDetail.requirements.map((value, index) => {
+                        return <li key={index}>{value}</li>
                     })
                 }
+                    </ul>
+                </p>
+
+                
             </div>
 
 

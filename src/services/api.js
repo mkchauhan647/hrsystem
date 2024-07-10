@@ -23,8 +23,11 @@ const addCandidate = (formData) => {
     // return api.post('/forms', formData);
     return api.post('/forms', formData, {
         headers: {
-            'Content-Type': 'multipart/form-data'
-        }
+            'Content-Type': 'multipart/form-data',
+            
+        },
+        
+        
     });
 };
 

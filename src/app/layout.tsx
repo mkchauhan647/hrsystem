@@ -6,6 +6,7 @@ import "./globals.css";
 // wrap with context provider
 
 import {FirebaseProvider} from '@/firebaseConfig/'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const inter = Inter({ subsets: ["latin"] });

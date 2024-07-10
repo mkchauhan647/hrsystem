@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { File } from "buffer";
 import os from 'os';
-import { firestore, storage } from './initializeFirebase';
+import { firestore, storage } from '../../../lib/firebaseAdmin/initializeFirebase';
 
 export async function POST(req: NextRequest) {
     const formData = await req.formData();

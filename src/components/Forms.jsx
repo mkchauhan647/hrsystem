@@ -27,15 +27,16 @@ const Forms = () => {
 
 
     return (
-        <div className="p-4">
+        <div className="p-4 overflow-auto">
             <h2 className="text-xl font-semibold mb-4">Submitted Forms</h2>
-            <div className="overflow-x-auto">
+            <div className="">
                 <table className="min-w-full bg-white border-gray-200 shadow-md rounded-lg">
                     <thead>
                         <tr className="text-left bg-gray-100">
                             <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Name</th>
                             <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Email</th>
                             <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Job ID</th>
+                            <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Company Name</th>
                             <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Submitted At</th>
                             <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Status</th>
                             <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Resume</th>
@@ -49,6 +50,7 @@ const Forms = () => {
                                 <td className="px-6 py-4 whitespace-no-wrap">{form.name}</td>
                                 <td className="px-6 py-4 whitespace-no-wrap">{form.email}</td>
                                 <td className="px-6 py-4 whitespace-no-wrap">{form.jobId}</td>
+                                <td className="px-6 py-4 whitespace-no-wrap">{form.company}</td>
                                 <td className="px-6 py-4 whitespace-no-wrap">{form.submit_date}</td>
                                 <td className="px-6 py-4 whitespace-no-wrap">{form.status}</td>
                                 <td className="px-6 py-4 whitespace-no-wrap cursor-pointer"><IoEyeOutline className='text-blue-s400 text-lg '/></td>
