@@ -61,8 +61,8 @@ export default function Signup() {
     return (
         <>
         
-        <div className="max-w-[280px] mx-auto flex justify-center items-center -mt-16 h-screen ">
-    <div className="flex flex-col items-center mt-[10vh]">
+        <div className="max-w-[450px] my-auto mx-auto flex justify-center items-center  h-screen ">
+    <div className="flex flex-col items-center  bg-gray-300 p-8  rounded-md ">
         <h2 className="mb-5 text-gray-900 font-mono font-bold text-xl">Sign Up</h2>
         <button className="flex items-center mb-2 justify-center px-3 py-2.5 space-x-2 bg-white border border-slate-600 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600">
             <svg viewBox="0 0 48 48" width="24" height="24" fill="#000000">

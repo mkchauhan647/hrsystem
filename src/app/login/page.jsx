@@ -66,7 +66,7 @@ export default function LoginPage() {
 <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"/>
 
 
-<section className="bg-blueGray-50 h-screen my-auto flex justify-center items-center -mt-12">
+<section className="bg-gray-300 h-screen my-auto flex justify-center items-center ">
   <div className="w-full lg:w-4/12 px-4 mx-auto pt-6">
     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
       <div className="rounded-t mb-0 px-6 py-6">
