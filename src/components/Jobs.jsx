@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import api from '@/services/api';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 // import { jobsData } from '@/data/dummyJobs';
 
 const Jobs = () => {
@@ -26,7 +27,17 @@ const Jobs = () => {
             
 
             // Simulating API fetch with dummy data
-            // console.log('jobdata', jobData.data[0]);
+            console.log('jobdata', jobData.data[0]);
+
+            jobData.data.sort((a, b) => {
+                if (a.updatedAt._seconds === b.updatedAt._seconds) {
+                  return b.updatedAt._nanoseconds - a.updatedAt._nanoseconds;
+                } else {
+                  return b.updatedAt._seconds - a.updatedAt._seconds;
+                }
+              });
+              
+              
            
             setJobs(jobData.data);
         } catch (error) {
@@ -53,6 +64,11 @@ const Jobs = () => {
         }
     };
 
+    const handleDeleteJob = (jobid) => {
+  
+        console.log(`JOb with ${jobid} is being deleted`);
+        toast.success(`Job With id ${jobid} is being deleted !`)
+    }
 
     const getRequirements = (requirements) => {
         const arrayReq = requirements;
@@ -73,7 +89,7 @@ const Jobs = () => {
                 <h2 className="text-3xl font-extrabold leading-tight text-center mb-8 text-blue-400">Job Dashboard</h2>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {jobs && jobs.map(job => (
-                        <div key={job.id} className="bg-white shadow-md rounded-lg overflow-hidden hover:scale-105 transition-all duration-500">
+                        <div key={job.id} className="bg-white shadow-md rounded-lg flex flex-col justify-between overflow-hidden hover:scale-105 transition-all duration-500">
                             <div className="px-6 py-4">
                                 <h3 className="text-lg font-semibold mb-2 text-blue-400">{job.title}</h3>
                                 <h3 className="text-lg font-semibold mb-2 text-blue-400">Company: {job.companyName}</h3>
@@ -85,17 +101,27 @@ const Jobs = () => {
                                    }
                                 </ul>
 
-                                <button
-                                    className="bg-blue-400 hover:bg-blue-600 transition-all duration-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                               
+                            </div>
+                            <div className='pb-4 pl-4 space-x-12 space-y-4'>
+                            <button
+                                    className="bg-blue-400 w-24  hover:bg-blue-600 transition-all duration-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                     onClick={() => handleApplyJob(job.id)}
                                 >
                                     Apply
                                 </button>
-                            </div>
+                            <button
+                                    className="bg-red-400 w-24  hover:bg-red-600 transition-all duration-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    onClick={() => handleDeleteJob(job.id)}
+                                >
+                                    Delete
+                                </button>
+                                </div>
                         </div>
                     ))}
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     );
 };
