@@ -90,7 +90,7 @@ const CandidateForm = ({ params }) => {
             //     otherFiles: []
             // });
         } catch (error) {
-            console.error('Error submitting candidate:', error.response.data);
+            console.error('Error submitting candidate:', error);
             // Handle error state
             
             toast.error(`Error ! ${error.response.data.message}`);

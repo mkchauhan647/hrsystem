@@ -2,14 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from 'fs';
 import path from 'path';
 import { File } from "buffer";
-import { getStorage } from "firebase-admin/storage";
-import { getFirestore } from "firebase-admin/firestore";
 import os from 'os';
-import { app } from './initializeFirebase';
-
-// Initialize Firebase Admin SDK if not already initialized
-const bucket = getStorage(app).bucket();
-const firestore = getFirestore(app);
+import { firestore, storage } from './initializeFirebase';
 
 export async function POST(req: NextRequest) {
     const formData = await req.formData();
@@ -22,14 +16,18 @@ export async function POST(req: NextRequest) {
 
     // Check if a candidate with the given email already exists
     const candidatesRef = firestore.collection('candidates');
-    
     const existingCandidateSnapshot = await candidatesRef.where('email', '==', email).get();
 
     if (!existingCandidateSnapshot.empty) {
-        return NextResponse.json({ message: "Application with this email already exists." }, { status: 400 });
+        return NextResponse.json({ message: "Candidate with this email already exists." }, { status: 400 });
     }
 
-    const tmpDir = 'uploads';
+    // Generate a new document ID
+    const docRef = candidatesRef.doc();
+    const docId = docRef.id;
+    candidateData.id = docId; // Add the generated ID to the candidate data
+
+    const tmpDir = 'uploads'; // Use OS temp directory for temporary file storage
     const fileUploadPromises: Promise<string>[] = [];
 
     for (const [key, value] of formData.entries()) {
@@ -40,7 +38,7 @@ export async function POST(req: NextRequest) {
             const buffer = await file.arrayBuffer();
             fs.writeFileSync(tempFilePath, new Uint8Array(buffer));
 
-            const uploadPromise = bucket.upload(tempFilePath, {
+            const uploadPromise = storage.bucket().upload(tempFilePath, {
                 destination: `uploads/${file.name}`,
                 public: true,
                 metadata: {
@@ -68,10 +66,6 @@ export async function POST(req: NextRequest) {
     console.log(fileUrls);
 
     // Add candidate data to Firestore
-    const docRef = candidatesRef.doc();
-    const docId = docRef.id;
-    candidateData.id = docId; // Add the generated ID to the candidate data
-
     await docRef.set(candidateData);
 
     return NextResponse.json({ message: "Form submitted successfully", files: fileUrls });

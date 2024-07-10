@@ -2,7 +2,8 @@
 
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3000/api'; // Replace with your backend API URL
+// const BASE_URL = 'http://localhost:3000/api'; // Replace with your backend API URL
+const BASE_URL = 'https://hrsystem.vercel.app/api'; // Replace with your backend API URL
 
 const api = axios.create({
     baseURL: BASE_URL,

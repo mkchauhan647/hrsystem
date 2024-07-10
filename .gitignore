@@ -36,3 +36,4 @@ yarn-error.log*
 next-env.d.ts
 open-resume
 hr-system-eb667-firebase-adminsdk-nb8oq-8e8c437db8.json
+serviceAccount.json
